@@ -1103,7 +1103,8 @@ int IQ2020Component::processIQ2020Command() {
 			if (processingBuffer[16] == 0x09) logo_lights = 4; // Power flash
 			if (processingBuffer[16] == 0x05) logo_lights = 5; // Power and ready flash
 			if ((processingBuffer[16] & 0x20) == 0x20) logo_lights = 6; // Power & ready alternate
-			if ((processingBuffer[16] & 0x1C) == 0x10) logo_lights = 7; // Power & ready salt error
+			// 0x16 is also salt attention; the existing mask alone misses it (0x16 & 0x1C == 0x14).
+			if (((processingBuffer[16] & 0x1C) == 0x10) || (processingBuffer[16] == 0x16)) logo_lights = 7; // Power & ready salt error
 			if (this->logo_lights_sensor_) this->logo_lights_sensor_->publish_state(logo_lights);
 			if (this->logo_lights_raw_sensor_) this->logo_lights_raw_sensor_->publish_state((float)processingBuffer[16]);
 #endif

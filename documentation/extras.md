@@ -287,6 +287,14 @@ text_sensor:
         - 7 -> Power and ready salt error
 ```
 
+Decoded value `7` is a salt-system attention indication, not a diagnosis of low
+salt or a failed cartridge. Raw `0x16` is included in this category; see the
+[reported light patterns](https://github.com/Ylianst/ESP-IQ2020/issues/42#issuecomment-3094672843).
+Check the spa panel for the specific message and use the `salt_level_confirmed`
+binary sensor as additional context. If you prefer a less diagnostic label, the
+text mapping above can use `7 -> Salt system attention` without changing the
+numeric value.
+
 You can remove the `internal: true` line if you want the numeric value to be available in Home Assistant, otherwise you will have the "Logo Lights" shown with a text value.
 
 ## Logo Lights Raw Value

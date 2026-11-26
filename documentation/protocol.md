@@ -477,8 +477,12 @@ Power flash                =   xx == 0x09
 Power & ready on           =   xx == 0x0A
 Power on                   =   xx == 0x02
 Power & ready alternate    =   xx & 35 == 32
-Power & ready salt error   =   xx & 28 == 16
+Power & ready salt error   =   (xx & 0x1C) == 0x10 OR xx == 0x16
 ```
+
+Raw `0x16` is another observed salt-system attention pattern. It maps to decoded
+state `7`, like the existing salt-error patterns. The old mask alone does not
+match it (`0x16 & 0x1C == 0x14`). Other raw values keep their existing mappings.
 
 Temperature string. The value encode the temperature set point and current temprature in ASCII encoding. The F indicates fahrenheit. For example:
 ```
